@@ -58,12 +58,20 @@ Use this while the package is not on npm. Your friend clones the repo, installs 
 npm install -g pnpm@latest-11
 
 git clone https://github.com/vaibhavKaiten/engos.git
-cd ENGOS
+cd engos          
 pnpm install
 pnpm add -g .
 
 pnpm setup
+
+# 5. Verify
+engos --version
+which engos
 ```
+
+If clone says `destination path 'engos' already exists`, either use the existing folder (`cd engos`) or remove it and clone again: `rm -rf engos && git clone ...`.
+
+**Important:** Every `pnpm` command after clone must run **inside** the repo (you should see `package.json` when you run `ls`). If you see `No package.json found in /home/you`, you are in the wrong directory.
 
 `pnpm add -g .` registers the `engos` binary from this folder on your system. You do **not** need to stay inside the ENGOS repo to use the command afterward.
 
@@ -188,8 +196,8 @@ Commit `.engos/`, `CLAUDE.md`, `AGENTS.md`, `.cursor/`, and `.github/copilot-ins
 ## Development (this repo)
 
 ```bash
-git clone https://github.com/YOUR_ORG/ENGOS.git
-cd ENGOS
+git clone https://github.com/vaibhavKaiten/engos.git
+cd engos
 pnpm install
 chmod +x bin/engos.js
 
@@ -233,6 +241,10 @@ Future milestones (not in MVP): `engos feature add`, `engos status`.
 
 | Problem | Fix |
 |---------|-----|
+| `cd ENGOS: No such file or directory` | Use `cd engos` (lowercase). Git names the folder after the repo URL (`engos.git` → `engos`). |
+| `destination path 'engos' already exists` | `cd engos` and continue, or `rm -rf engos` then clone again. |
+| `No package.json found in /home/...` | You never entered the repo. `cd engos`, run `ls package.json`, then retry `pnpm install` and `pnpm add -g .`. |
+| `ENOENT .../node_modules/<username>/package.json` after a bad global install | A prior `pnpm add -g .` ran outside the repo. From inside `engos`: `pnpm install && pnpm add -g .`. If it persists: `pnpm remove -g .` (from `engos`), or `rm -rf ~/.local/share/pnpm/global`, then `pnpm add -g .` again. |
 | `engos: command not found` | Run `pnpm setup`, restart terminal, or add pnpm bin to `PATH` (see Option A) |
 | `pnpm: command not found` | Install Node, then `corepack enable` and `corepack prepare pnpm@latest --activate` |
 | Global link fails on pnpm 11 | Use `pnpm add -g .` from the ENGOS repo instead of `pnpm link --global` |
