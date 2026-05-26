@@ -55,10 +55,14 @@ You only install ENGOS **once per laptop**. `engos init` is run **per project** 
 Use this while the package is not on npm. Your friend clones the repo, installs dependencies, then **links the CLI globally** so `engos` is available everywhere.
 
 ```bash
-git clone https://github.com/YOUR_ORG/ENGOS.git
+npm install -g pnpm@latest-11
+
+git clone https://github.com/vaibhavKaiten/engos.git
 cd ENGOS
 pnpm install
 pnpm add -g .
+
+pnpm setup
 ```
 
 `pnpm add -g .` registers the `engos` binary from this folder on your system. You do **not** need to stay inside the ENGOS repo to use the command afterward.
